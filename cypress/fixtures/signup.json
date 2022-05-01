@@ -1,0 +1,23 @@
+{
+  "success": {
+    "name": "Henrique Ramos",
+    "email": "henriqueramos@samuraibs.com",
+    "password": "samurai"
+  },
+  "email_dup": {
+    "name": "João Lucas",
+    "email": "joão@samuraibs.com",
+    "password": "samurai",
+    "is_provider": true
+  },
+  "email_inv": {
+    "name": "Elizaveth Olsen",
+    "email": "liza.yahoo.com",
+    "password": "samurai"
+  },
+  "short_password":{
+    "name": "Jason Friday",
+    "email": "jason@gmail.com",
+    "password": null
+  }
+}
