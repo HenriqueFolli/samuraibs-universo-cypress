@@ -24,14 +24,14 @@ jobs:
       - name: Ping API (heroku)
         uses: Leocardoso94/is-my-site-up@v1.2
         with:
-          site: https://samuraibs-api-henrique-herokuapp.com
+          site: https://samuraibs-api-henrique.herokuapp.com
 
       - name: 'UI Tests - Chrome'
         uses: cypress-io/github-action@v2
         with:
           # we have already installed all dependencies above
           install-command: yarn install
-          wait-on: 'https://samuraibs-web-henrique-herokuapp.com'
+          wait-on: 'https://samuraibs-web-henrique.herokuapp.com'
           wait-on-timeout: 120
           browser: chrome
           record: true
