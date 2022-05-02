@@ -1,0 +1,52 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Firefox UI Tests
+
+# Controls when the workflow will run
+on:
+  workflow_dispatch:
+    inputs:
+      specs:
+        description: 'Run ALL or unique spec'
+        default: cypress/integration/*
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  chrome-ui-tests:
+    runs-on: ubuntu-latest
+    container: 
+      image: cypress/browsers:node14.17.6-chrome100-ff98
+      options: --user 1001
+    strategy:
+      fail-fast: false
+      matrix:
+        # run copies of the current job in parallel
+        containers: [1]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: Ping API (heroku)
+        uses: Leocardoso94/is-my-site-up@v1.2
+        with:
+          site: https://samuraibs-api-henrique.herokuapp.com
+
+      - name: 'UI Tests - Chrome'
+        uses: cypress-io/github-action@v2
+        with:
+          # we have already installed all dependencies above
+          install-command: yarn install
+          wait-on: 'https://samuraibs-web-henrique.herokuapp.com'
+          wait-on-timeout: 120
+          browser: firefox
+          record: true
+          parallel: true
+          group: 'UI - Firefox'
+          spec: ${{ github.event.inputs.specs }}
+        env:
+          TZ: America/Sao_Paulo
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          # Recommended: pass the GitHub token lets this action correctly
+          # determine the unique run id necessary to re-run the checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
