@@ -5,6 +5,10 @@ name: Chrome UI Tests
 # Controls when the workflow will run
 on:
   workflow_dispatch:
+    inputs:
+      specs:
+        description: 'Run ALL or unique spec'
+        default: cypress/integration/*
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -37,7 +41,7 @@ jobs:
           record: true
           parallel: true
           group: 'UI - Chrome'
-          spec: cypress/integration/*
+          spec: ${{ github.event.inputs.specs }}
         env:
           TZ: America/Sao_Paulo
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
